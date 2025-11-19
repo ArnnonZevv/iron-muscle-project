@@ -1,20 +1,29 @@
 export default function Trainers() {
     return (
-        <div className="p-6 bg-gray-900 min-h-screen text-white">
+        <div className="min-h-screen bg-[#0f0f0f] p-6 text-white">
 
-            <h1 className="text-3xl font-semibold mb-6">Our Trainers</h1>
+            <h1 className="text-3xl font-semibold mb-10">Trainers</h1>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid gap-6 max-w-4xl mx-auto">
 
-                {[1, 2, 3, 4, 5, 6].map((t) => (
-                    <div key={t} className="bg-gray-800 p-6 rounded-xl shadow-lg text-center">
-                        <div className="w-24 h-24 bg-gray-700 rounded-full mx-auto mb-3"></div>
-                        <h2 className="text-xl font-semibold">Trainer {t}</h2>
-                        <p className="text-gray-300">Strength Specialist</p>
+                {["Alan", "Christopher", "Hailey"].map((name, index) => (
+                    <div
+                        key={index}
+                        className="bg-[#1b1b1b] rounded-2xl p-6 flex gap-6 shadow-lg"
+                    >
+                        <div className="w-24 h-24 bg-gray-700 rounded-2xl"></div>
 
-                        <button className="mt-4 bg-yellow-500 text-black w-full py-2 rounded hover:bg-yellow-400">
-                            Book Session
-                        </button>
+                        <div className="flex flex-col justify-between">
+                            <p className="text-xl font-semibold">{name}</p>
+                            <p className="text-gray-400 max-w-sm">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                Integer id lorem et sapien pellentesque volutpat.
+                            </p>
+
+                            <button className="self-start bg-yellow-500 text-black px-4 py-2 rounded-xl">
+                                Book Session
+                            </button>
+                        </div>
                     </div>
                 ))}
 

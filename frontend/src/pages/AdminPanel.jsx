@@ -1,39 +1,33 @@
 export default function AdminPanel() {
     return (
-        <div className="p-6 bg-gray-900 min-h-screen text-white">
-            <h1 className="text-3xl font-semibold mb-6">Admin Panel</h1>
+        <div className="min-h-screen bg-[#0f0f0f] text-white p-6">
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <h1 className="text-3xl font-semibold mb-10 tracking-wide">Admin Panel</h1>
 
-                <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
-                    <h2 className="text-xl font-semibold mb-4">Members</h2>
-                    <button className="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-400">
-                        Manage Members
-                    </button>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl mx-auto">
 
-                <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
-                    <h2 className="text-xl font-semibold mb-4">Classes</h2>
-                    <button className="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-400">
-                        Manage Classes
-                    </button>
-                </div>
+                {[
+                    "Manage Members",
+                    "Manage Classes",
+                    "Manage Trainers",
+                    "Payment Reports",
+                    "Cancellation Requests",
+                    "Dashboard Settings",
+                ].map((title, index) => (
+                    <div
+                        key={index}
+                        className="bg-[#1b1b1b] rounded-3xl p-8 shadow-xl flex flex-col justify-between min-h-[180px]"
+                    >
+                        <h2 className="text-xl font-semibold mb-6">{title}</h2>
 
-                <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
-                    <h2 className="text-xl font-semibold mb-4">Trainers</h2>
-                    <button className="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-400">
-                        Manage Trainers
-                    </button>
-                </div>
-
-                <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
-                    <h2 className="text-xl font-semibold mb-4">Reports</h2>
-                    <button className="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-400">
-                        View Reports
-                    </button>
-                </div>
+                        <button className="bg-yellow-500 text-black px-5 py-3 rounded-xl font-semibold hover:bg-yellow-400">
+                            Open
+                        </button>
+                    </div>
+                ))}
 
             </div>
+
         </div>
     );
 }

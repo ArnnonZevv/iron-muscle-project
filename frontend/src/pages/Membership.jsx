@@ -1,26 +1,31 @@
 export default function Membership() {
     return (
-        <div className="p-6 bg-gray-900 min-h-screen text-white">
+        <div className="min-h-screen bg-[#0f0f0f] text-white p-6">
 
-            <h1 className="text-3xl font-semibold mb-6">Membership</h1>
+            <h1 className="text-4xl font-semibold text-center mb-10">MEMBERSHIPS</h1>
 
-            <div className="bg-gray-800 p-6 rounded-xl shadow-lg max-w-xl">
-                <h2 className="text-xl font-semibold mb-4">Current Plan</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
 
-                <p className="text-gray-300">Plan: Monthly</p>
-                <p className="text-gray-300">Status: Active</p>
-                <p className="text-gray-300">Next Billing: March 15, 2025</p>
+                {[
+                    { title: "Premium", price: "$XX.XX" },
+                    { title: "Standard", price: "$XX.XX" },
+                ].map((plan, index) => (
+                    <div key={index} className="bg-[#1b1b1b] rounded-3xl p-8 shadow-xl">
+                        <h2 className="text-2xl font-semibold mb-2">{plan.title}</h2>
+                        <p className="text-3xl font-bold text-yellow-400 mb-4">{plan.price}</p>
 
-                <div className="mt-6 flex gap-4">
-                    <button className="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-400">
-                        Upgrade
-                    </button>
-                    <button className="bg-gray-700 px-4 py-2 rounded hover:bg-gray-600">
-                        Cancel Membership
-                    </button>
-                </div>
+                        <p className="text-gray-400 mb-6">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Integer id lorem et sapien pellentesque volutpat.
+                        </p>
+
+                        <button className="bg-yellow-500 text-black px-6 py-3 rounded-xl font-semibold hover:bg-yellow-400">
+                            Subscribe
+                        </button>
+                    </div>
+                ))}
+
             </div>
-
         </div>
     );
 }
