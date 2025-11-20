@@ -1,8 +1,14 @@
+import logo from '../assets/logo.png';
+
 export default function Navbar() {
     return (
         <header className="w-full bg-gray-900 text-white flex items-center justify-between px-6 py-4 shadow-md">
             <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gray-700"></div>
+                <img 
+                    src={logo} 
+                    alt="Logo" 
+                    className="w-10 h-10 rounded-full object-cover"
+                />
             </div>
 
             <h1 className="text-xl font-semibold tracking-wide">Iron Muscle</h1>
