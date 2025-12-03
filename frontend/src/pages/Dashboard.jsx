@@ -18,18 +18,26 @@ export default function Dashboard() {
                     <h2 className="text-xl font-semibold mb-4">Shortcuts</h2>
 
                     <div className="space-y-4">
-                        <button className="w-full bg-[#333] p-4 rounded-xl text-left">
-                            Membership
-                        </button>
-                        <button className="w-full bg-[#333] p-4 rounded-xl text-left">
-                            Payments
-                        </button>
-                        <button className="w-full bg-[#333] p-4 rounded-xl text-left">
-                            Classes
-                        </button>
-                        <button className="w-full bg-[#333] p-4 rounded-xl text-left">
-                            Trainers
-                        </button>
+                        <a href="/membership" className="block">
+                            <button className="w-full bg-[#333] p-4 rounded-xl text-left">
+                                Membership
+                            </button>
+                        </a>
+                        <a href="/payments" className="block">
+                            <button className="w-full bg-[#333] p-4 rounded-xl text-left">
+                                Payments
+                            </button>
+                        </a>
+                        <a href="/classes" className="block">
+                            <button className="w-full bg-[#333] p-4 rounded-xl text-left">
+                                Classes
+                            </button>
+                        </a>
+                        <a href="/trainers" className="block">
+                            <button className="w-full bg-[#333] p-4 rounded-xl text-left">
+                                Trainers
+                            </button>
+                        </a>
                     </div>
                 </div>
 
