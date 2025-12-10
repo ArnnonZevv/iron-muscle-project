@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,9 +37,11 @@ public class SecurityConfig {
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**", "/h2-console/**").permitAll()
-                .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
-                .anyRequest().authenticated()
+                // Public endpoints
+                .requestMatchers("/", "/api/auth/**").permitAll()
+                
+                // TEMPORARILY allow all other requests for testing
+                .anyRequest().permitAll()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
             .headers(headers -> headers.frameOptions(frame -> frame.disable()));

@@ -21,6 +21,7 @@ public class ClassController {
         return service.getAll();
     }
 
+    // Class data comes from request body
     @PostMapping
     public GymClass create(@RequestParam Long trainerId,
                            @RequestBody GymClass c) {

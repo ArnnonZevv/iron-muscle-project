@@ -9,6 +9,7 @@ public class Trainer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "trainer_id")
     private Long id;
 
     @Column(name = "first_name", nullable = false)
