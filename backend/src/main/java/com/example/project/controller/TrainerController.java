@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/trainers")
+@CrossOrigin(origins = "http://localhost:5173") // Add this line for React frontend
 public class TrainerController {
     private final TrainerService service;
     public TrainerController(TrainerService service){ this.service = service; }

@@ -1,8 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import logo from '../assets/logo.png';
 
 export default function Navbar() {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        navigate("/");
+    };
+
     return (
-        <header className="w-full bg-gray-900 text-white flex items-center justify-between px-6 py-4 shadow-md">
+        <header className="fixed top-0 w-full bg-gray-900 text-white flex items-center justify-between px-6 py-4 shadow-md z-50">
             <div className="flex items-center gap-3">
                 <img 
                     src={logo} 
@@ -23,7 +31,10 @@ export default function Navbar() {
                 <a href="/admin" className="hover:text-yellow-400">Admin Panel</a>
                 <a href="/settings" className="hover:text-yellow-400">Settings</a>
 
-                <button className="bg-red-500 px-4 py-1 rounded hover:bg-red-600">
+                <button 
+                    onClick={handleLogout} 
+                    className="bg-red-500 px-4 py-1 rounded hover:bg-red-600"
+                >
                     Logout
                 </button>
             </nav>

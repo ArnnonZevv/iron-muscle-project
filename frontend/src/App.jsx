@@ -19,7 +19,7 @@ function Layout() {
         <>
             {!noNavbar.includes(location.pathname) && <Navbar />}
 
-            <div className="pt-4">
+            <div className="pt-0">
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />

@@ -28,7 +28,6 @@ public class GymClass {
     @Column(name = "schedule_datetime", nullable = false)
     private LocalDateTime scheduleDatetime;
 
-    // optional: map the 'title' column in DB if you need it
     // @Column(name = "title")
     // private String altTitle;
 
