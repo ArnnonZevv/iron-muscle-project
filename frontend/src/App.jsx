@@ -11,6 +11,8 @@ import Cancellation from "./pages/Cancellation";
 import AdminPanel from "./pages/AdminPanel";
 import Settings from "./pages/Settings";
 
+import { ToastProvider } from "./ToastContext";
+
 function Layout() {
     const location = useLocation();
     const noNavbar = ["/", "/signup"]; // no navbar on login & signup
@@ -39,8 +41,10 @@ function Layout() {
 
 export default function App() {
     return (
-        <BrowserRouter>
-            <Layout />
-        </BrowserRouter>
+        <ToastProvider>
+            <BrowserRouter>
+                <Layout />
+            </BrowserRouter>
+        </ToastProvider>
     );
 }

@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useToast } from "../ToastContext";
 
 export default function Settings() {
+    const { addToast } = useToast();
     const user = JSON.parse(localStorage.getItem("user"));
     const [fullName, setFullName] = useState(user?.username || "");
     const [description, setDescription] = useState(user?.description || "");
@@ -16,17 +18,17 @@ export default function Settings() {
     const handleSaveProfile = () => {
         const updatedUser = { ...user, username: fullName, description };
         localStorage.setItem("user", JSON.stringify(updatedUser));
-        alert("Profile updated!");
+        addToast("Profile updated!", "success");
     };
 
     const handleChangePassword = async () => {
         if (!currentPassword || !newPassword || !confirmPassword) {
-            alert("Please fill all password fields");
+            addToast("Please fill all password fields", "error");
             return;
         }
 
         if (newPassword !== confirmPassword) {
-            alert("New password and confirmation do not match!");
+            addToast("New password and confirmation do not match!", "error");
             return;
         }
 
@@ -44,65 +46,72 @@ export default function Settings() {
             const data = await response.json();
 
             if (!response.ok) {
-                alert(data.message || "Password change failed");
+                addToast(data.message || "Password change failed", "error");
                 return;
             }
 
             const updatedUser = { ...user, password: newPassword };
             localStorage.setItem("user", JSON.stringify(updatedUser));
 
-            alert("Password changed successfully!");
+            addToast("Password changed successfully!", "success");
             setCurrentPassword("");
             setNewPassword("");
             setConfirmPassword("");
         } catch (err) {
             console.error(err);
-            alert("An error occurred while changing the password");
+            addToast("An error occurred while changing the password", "error");
         }
     };
 
     return (
-        <div className="min-h-screen bg-[#0f0f0f] text-white p-6">
-
+        <div className="min-h-screen bg-[#0f0f0f] text-white p-6 pt-11">
             <h1 className="text-3xl font-semibold mb-10">Settings</h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-10 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
 
                 {/* LEFT MENU */}
-                <div className="bg-[#1b1b1b] rounded-3xl p-6 shadow-xl space-y-4 h-fit">
-                    <button
+                <div className="bg-[#1b1b1b] rounded-3xl shadow-xl overflow-hidden h-fit">
+                    <div
                         onClick={() => setActiveTab("Profile")}
-                        className={`w-full py-3 rounded-xl text-left px-4 ${activeTab === "Profile" ? "bg-gray-700" : "bg-[#2d2d2d]"} hover:bg-[#3a3a3a]`}
+                        className={`w-full h-[72px] flex items-center px-6 font-medium cursor-pointer transition-colors ${
+                            activeTab === "Profile" 
+                                ? "bg-yellow-500 text-black" 
+                                : "bg-[#1b1b1b] text-white hover:bg-[#2a2a2a]"
+                        }`}
                     >
                         Profile
-                    </button>
-                    <button
+                    </div>
+                    <div
                         onClick={() => setActiveTab("Password")}
-                        className={`w-full py-3 rounded-xl text-left px-4 ${activeTab === "Password" ? "bg-gray-700" : "bg-[#2d2d2d]"} hover:bg-[#3a3a3a]`}
+                        className={`w-full h-[72px] flex items-center px-6 font-medium cursor-pointer transition-colors ${
+                            activeTab === "Password" 
+                                ? "bg-yellow-500 text-black" 
+                                : "bg-[#1b1b1b] text-white hover:bg-[#2a2a2a]"
+                        }`}
                     >
                         Password
-                    </button>
+                    </div>
                 </div>
 
                 {/* RIGHT PANEL */}
-                <div className="bg-[#1b1b1b] rounded-3xl p-10 shadow-xl md:col-span-3 min-h-[400px]">
+                <div className="bg-[#1b1b1b] rounded-3xl p-10 shadow-xl md:col-span-3">
                     {activeTab === "Profile" && (
-                        <>
-                            <h2 className="text-2xl font-semibold mb-6">Profile Settings</h2>
+                        <div>
+                            <h2 className="text-2xl font-semibold mb-8">Profile Settings</h2>
                             <div className="space-y-6 max-w-xl">
                                 <div>
-                                    <label className="text-gray-300">Full Name</label>
+                                    <label className="block text-gray-300 mb-2 font-medium">Full Name</label>
                                     <input
-                                        className="w-full mt-1 p-3 rounded-xl bg-[#2a2a2a] outline-none"
+                                        className="w-full p-3 rounded-xl bg-[#2a2a2a] text-white outline-none focus:ring-2 focus:ring-yellow-500 transition-shadow"
                                         value={fullName}
                                         onChange={(e) => setFullName(e.target.value)}
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="text-gray-300">Description</label>
+                                    <label className="block text-gray-300 mb-2 font-medium">Description</label>
                                     <input
-                                        className="w-full mt-1 p-3 rounded-xl bg-[#2a2a2a] outline-none"
+                                        className="w-full p-3 rounded-xl bg-[#2a2a2a] text-white outline-none focus:ring-2 focus:ring-yellow-500 transition-shadow"
                                         value={description}
                                         onChange={(e) => setDescription(e.target.value)}
                                         placeholder="Add a description..."
@@ -110,9 +119,9 @@ export default function Settings() {
                                 </div>
 
                                 <div>
-                                    <label className="text-gray-300">Email</label>
+                                    <label className="block text-gray-300 mb-2 font-medium">Email</label>
                                     <input
-                                        className="w-full mt-1 p-3 rounded-xl bg-gray-700 text-gray-400 outline-none cursor-not-allowed"
+                                        className="w-full p-3 rounded-xl bg-gray-700 text-gray-400 outline-none cursor-not-allowed"
                                         value={email}
                                         disabled
                                     />
@@ -120,33 +129,37 @@ export default function Settings() {
 
                                 <button
                                     onClick={handleSaveProfile}
-                                    className="bg-yellow-500 text-black px-6 py-3 rounded-xl hover:bg-yellow-400"
+                                    className="bg-yellow-500 text-black px-8 py-3 rounded-xl font-semibold hover:bg-yellow-400 transition-colors mt-4"
                                 >
                                     Save Changes
                                 </button>
                             </div>
-                        </>
+                        </div>
                     )}
 
                     {activeTab === "Password" && (
-                        <>
-                            <h2 className="text-2xl font-semibold mb-6">Change Password</h2>
+                        <div>
+                            <h2 className="text-2xl font-semibold mb-8">Change Password</h2>
                             <div className="space-y-6 max-w-xl">
                                 <div>
-                                    <label className="text-gray-300">Current Password</label>
+                                    <label className="block text-gray-300 mb-2 font-medium">Current Password</label>
                                     <input
                                         type="password"
-                                        className="w-full mt-1 p-3 rounded-xl bg-[#2a2a2a] outline-none"
+                                        className="w-full p-3 rounded-xl bg-[#2a2a2a] text-white outline-none focus:ring-2 focus:ring-yellow-500 transition-shadow"
                                         value={currentPassword}
                                         onChange={(e) => setCurrentPassword(e.target.value)}
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="text-gray-300">New Password</label>
+                                    <label className="block text-gray-300 mb-2 font-medium">New Password</label>
                                     <input
                                         type="password"
-                                        className={`w-full mt-1 p-3 rounded-xl outline-none ${currentPassword ? "bg-[#2a2a2a]" : "bg-gray-700 text-gray-400 cursor-not-allowed"}`}
+                                        className={`w-full p-3 rounded-xl outline-none transition-shadow ${
+                                            currentPassword 
+                                                ? "bg-[#2a2a2a] text-white focus:ring-2 focus:ring-yellow-500" 
+                                                : "bg-gray-700 text-gray-400 cursor-not-allowed"
+                                        }`}
                                         value={newPassword}
                                         onChange={(e) => setNewPassword(e.target.value)}
                                         disabled={!currentPassword}
@@ -154,10 +167,14 @@ export default function Settings() {
                                 </div>
 
                                 <div>
-                                    <label className="text-gray-300">Confirm New Password</label>
+                                    <label className="block text-gray-300 mb-2 font-medium">Confirm New Password</label>
                                     <input
                                         type="password"
-                                        className={`w-full mt-1 p-3 rounded-xl outline-none ${currentPassword ? "bg-[#2a2a2a]" : "bg-gray-700 text-gray-400 cursor-not-allowed"}`}
+                                        className={`w-full p-3 rounded-xl outline-none transition-shadow ${
+                                            currentPassword 
+                                                ? "bg-[#2a2a2a] text-white focus:ring-2 focus:ring-yellow-500" 
+                                                : "bg-gray-700 text-gray-400 cursor-not-allowed"
+                                        }`}
                                         value={confirmPassword}
                                         onChange={(e) => setConfirmPassword(e.target.value)}
                                         disabled={!currentPassword}
@@ -166,12 +183,12 @@ export default function Settings() {
 
                                 <button
                                     onClick={handleChangePassword}
-                                    className="bg-yellow-500 text-black px-6 py-3 rounded-xl hover:bg-yellow-400"
+                                    className="bg-yellow-500 text-black px-8 py-3 rounded-xl font-semibold hover:bg-yellow-400 transition-colors mt-4"
                                 >
                                     Change Password
                                 </button>
                             </div>
-                        </>
+                        </div>
                     )}
                 </div>
             </div>

@@ -1,6 +1,6 @@
 export default function AdminPanel() {
     return (
-        <div className="min-h-screen bg-[#0f0f0f] text-white p-6">
+        <div className="min-h-screen bg-[#0f0f0f] text-white p-6 pt-11">
 
             <h1 className="text-3xl font-semibold mb-10 tracking-wide">Admin Panel</h1>
 
@@ -16,13 +16,19 @@ export default function AdminPanel() {
                 ].map((title, index) => (
                     <div
                         key={index}
-                        className="bg-[#1b1b1b] rounded-3xl p-8 shadow-xl flex flex-col justify-between min-h-[180px]"
+                        className="bg-[#1b1b1b] rounded-3xl shadow-xl overflow-hidden"
                     >
-                        <h2 className="text-xl font-semibold mb-6">{title}</h2>
+                        {/* Title Section */}
+                        <div className="p-8 min-h-[108px] flex items-center">
+                            <h2 className="text-xl font-semibold">{title}</h2>
+                        </div>
 
-                        <button className="bg-yellow-500 text-black px-5 py-3 rounded-xl font-semibold hover:bg-yellow-400">
-                            Open
-                        </button>
+                        {/* Open Button */}
+                        <div className="flex w-full">
+                            <div className="w-full bg-yellow-500 h-[72px] flex items-center justify-center text-black text-lg font-semibold hover:bg-yellow-400 transition-colors cursor-pointer">
+                                Open
+                            </div>
+                        </div>
                     </div>
                 ))}
 

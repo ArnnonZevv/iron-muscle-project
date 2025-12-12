@@ -40,7 +40,7 @@ export default function PaymentDetails() {
   if (!membership) return <p>Loading...</p>;
 
   return (
-    <div className="min-h-screen bg-[#0f0f0f] text-white p-6">
+    <div className="min-h-screen bg-[#0f0f0f] text-white p-6 pt-11">
       <h1 className="text-3xl font-semibold mb-6">Payment Details</h1>
 
       <div className="bg-[#1b1b1b] p-8 rounded-3xl max-w-xl mx-auto">

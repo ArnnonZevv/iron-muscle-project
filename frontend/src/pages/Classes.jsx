@@ -11,59 +11,29 @@ export default function Classes() {
 
     const fetchClassesWithTrainers = async () => {
         try {
-            const trainersResponse = await fetch('http://localhost:8080/api/trainers');
-            const trainers = await trainersResponse.json();
-
-            const trainersBySpecialization = {
-                'Strength': [],
-                'Cardio': [],
-                'HIIT': [],
-                'Yoga': [],
-                'Pilates': [],
-                'Stretching': [],
-                'Senior Fitness': [],
-                'Mobility & Recovery': [],
-                'Meditation': []
-            };
-
-            trainers.forEach(trainer => {
-                const fullName = `${trainer.firstName} ${trainer.lastName}`;
-                const spec = trainer.specialization || trainer.specialty;
-
-                if (spec === 'Strength' || spec === 'Strength Training') trainersBySpecialization['Strength'].push(fullName);
-                else if (spec === 'Cardio') trainersBySpecialization['Cardio'].push(fullName);
-                else if (spec === 'HIIT') trainersBySpecialization['HIIT'].push(fullName);
-                else if (spec === 'Yoga') trainersBySpecialization['Yoga'].push(fullName);
-                else if (spec === 'Pilates') trainersBySpecialization['Pilates'].push(fullName);
-                else if (spec === 'Stretching') trainersBySpecialization['Stretching'].push(fullName);
-                else if (spec === 'Senior Fitness') trainersBySpecialization['Senior Fitness'].push(fullName);
-                else if (spec === 'Mobility & Recovery') trainersBySpecialization['Mobility & Recovery'].push(fullName);
-                else if (spec === 'Meditation') trainersBySpecialization['Meditation'].push(fullName);
-            });
-
             const categories = [
                 {
                     category: "Traditional / General Fitness",
                     classes: [
-                        { name: "Strength Training", description: "Build muscle and increase strength through weightlifting and resistance exercises.", duration: "55 min", difficulty: "Intermediate - Advanced", trainers: trainersBySpecialization['Strength'] },
-                        { name: "Cardio", description: "Boost stamina and burn calories with high-energy cardiovascular workouts.", duration: "45 min", difficulty: "All Levels", trainers: trainersBySpecialization['Cardio'] },
-                        { name: "HIIT (High-Intensity Interval Training)", description: "Push your limits with short bursts of intense exercise followed by recovery periods.", duration: "30 min", difficulty: "Advanced", trainers: trainersBySpecialization['HIIT'] }
+                        { name: "Strength Training", description: "Build muscle and increase strength through weightlifting and resistance exercises.", duration: "55 min", difficulty: "Intermediate - Advanced", trainers: ["Mike Johnson", "Sara Miller"] },
+                        { name: "Cardio", description: "Boost stamina and burn calories with high-energy cardiovascular workouts.", duration: "45 min", difficulty: "All Levels", trainers: ["John Doe", "Hailey Brown"] },
+                        { name: "HIIT (High-Intensity Interval Training)", description: "Push your limits with short bursts of intense exercise followed by recovery periods.", duration: "30 min", difficulty: "Advanced", trainers: ["Luke Wilson", "Emma Davis"] }
                     ]
                 },
                 {
                     category: "Mind & Body",
                     classes: [
-                        { name: "Yoga", description: "Improve flexibility, balance, and mindfulness through guided yoga sessions.", duration: "60 min", difficulty: "Beginner - Intermediate", trainers: trainersBySpecialization['Yoga'] },
-                        { name: "Pilates", description: "Strengthen your core and improve posture using controlled movements.", duration: "50 min", difficulty: "Beginner - Intermediate", trainers: trainersBySpecialization['Pilates'] },
-                        { name: "Stretching", description: "Enhance flexibility and reduce muscle tension with focused stretching routines.", duration: "40 min", difficulty: "All Levels", trainers: trainersBySpecialization['Stretching'] }
+                        { name: "Yoga", description: "Improve flexibility, balance, and mindfulness through guided yoga sessions.", duration: "60 min", difficulty: "Beginner - Intermediate", trainers: ["Emily Rodriguez", "Sophia Taylor"] },
+                        { name: "Pilates", description: "Strengthen your core and improve posture using controlled movements.", duration: "50 min", difficulty: "Beginner - Intermediate", trainers: ["Daniel Lee", "Olivia Martin"] },
+                        { name: "Stretching", description: "Enhance flexibility and reduce muscle tension with focused stretching routines.", duration: "40 min", difficulty: "All Levels", trainers: ["Tom Anderson", "Grace Hall"] }
                     ]
                 },
                 {
                     category: "Recovery & Low Impact",
                     classes: [
-                        { name: "Senior Fitness", description: "Gentle exercises to maintain mobility, strength, and overall health for seniors.", duration: "45 min", difficulty: "Beginner", trainers: trainersBySpecialization['Senior Fitness'] },
-                        { name: "Mobility & Recovery", description: "Aid muscle recovery and improve joint mobility with low-impact exercises.", duration: "40 min", difficulty: "All Levels", trainers: trainersBySpecialization['Mobility & Recovery'] },
-                        { name: "Meditation", description: "Relax your mind, reduce stress, and improve focus through guided meditation sessions.", duration: "30 min", difficulty: "All Levels", trainers: trainersBySpecialization['Meditation'] }
+                        { name: "Senior Fitness", description: "Gentle exercises to maintain mobility, strength, and overall health for seniors.", duration: "45 min", difficulty: "Beginner", trainers: ["Henry Walker", "Chloe Young"] },
+                        { name: "Mobility & Recovery", description: "Aid muscle recovery and improve joint mobility with low-impact exercises.", duration: "40 min", difficulty: "All Levels", trainers: ["Jessica Lee", "Ethan Lewis"] },
+                        { name: "Meditation", description: "Relax your mind, reduce stress, and improve focus through guided meditation sessions.", duration: "30 min", difficulty: "All Levels", trainers: ["Ana Silva", "Liam Clark"] }
                     ]
                 }
             ];
@@ -82,9 +52,6 @@ export default function Classes() {
     };
 
     const handleBookSession = (className, trainer) => {
-        const bookedClasses = JSON.parse(localStorage.getItem("bookedClasses") || "[]");
-        bookedClasses.push({ className, trainer, category: "Class Session" });
-        localStorage.setItem("bookedClasses", JSON.stringify(bookedClasses));
         alert(`Booked ${className} session with ${trainer}`);
     };
 
@@ -97,7 +64,7 @@ export default function Classes() {
     }
 
     return (
-        <div className="min-h-screen bg-[#0f0f0f] p-6 text-white">
+        <div className="min-h-screen bg-[#0f0f0f] p-6 text-white pt-11">
             <h1 className="text-3xl font-semibold mb-10 text-center">Classes</h1>
 
             {classCategories.map((cat, catIndex) => (
@@ -107,29 +74,35 @@ export default function Classes() {
                     <div className="grid gap-6 max-w-4xl mx-auto">
                         {cat.classes.map((classItem, classIndex) => {
                             const key = `${catIndex}-${classIndex}`;
+                            const isExpanded = expandedClass === key;
+                            
                             return (
-                                <div key={key} className="bg-[#1b1b1b] rounded-2xl shadow-lg overflow-hidden">
-                                    <div className="p-6 flex justify-between items-center">
-                                        <span className="text-2xl">{classItem.name}</span>
+                                <div key={key} className="bg-[#1b1b1b] rounded-3xl shadow-xl overflow-hidden">
+                                    {/* Main class info with Book button */}
+                                    <div className="flex w-full">
+                                        {/* Class Name */}
+                                        <div className="flex-1 bg-[#1b1b1b] p-6 ">
+                                            <span className="text-2xl font-semibold">{classItem.name}</span>
+                                        </div>
 
-                                        <div className="flex flex-col gap-3">
-                                            <button className="bg-yellow-500 text-black px-5 py-3 rounded-lg hover:bg-yellow-400 transition">
-                                                Book
-                                            </button>
-                                            <button 
-                                                onClick={() => toggleExpand(catIndex, classIndex)}
-                                                className="bg-[#333] px-5 py-3 rounded-lg hover:bg-[#444] transition"
-                                            >
-                                                {expandedClass === key ? 'Hide' : 'Info'}
-                                            </button>
+                                        {/* Book Button */}
+                                        <div
+                                            className="bg-yellow-500 w-32 py-6 flex items-center justify-center text-black font-semibold hover:bg-yellow-400 transition-colors cursor-pointer"
+                                            onClick={() => handleBookSession(classItem.name, classItem.trainers[0])}
+                                        >
+                                            Book
                                         </div>
                                     </div>
 
+                                    {/* Expanded Details */}
                                     <div 
                                         className="transition-all duration-500 ease-in-out overflow-hidden"
-                                        style={{ maxHeight: expandedClass === key ? '500px' : '0px', opacity: expandedClass === key ? 1 : 0 }}
+                                        style={{ 
+                                            maxHeight: isExpanded ? '500px' : '0px', 
+                                            opacity: isExpanded ? 1 : 0 
+                                        }}
                                     >
-                                        <div className="px-6 pb-6 border-t border-[#333] pt-4">
+                                        <div className="px-6 py-6 border-t border-[#333]">
                                             <p className="text-gray-300 mb-4">{classItem.description}</p>
                                             
                                             <div className="grid grid-cols-2 gap-4 mb-4">
@@ -150,11 +123,7 @@ export default function Classes() {
                                                         classItem.trainers.map((trainer, i) => (
                                                             <span
                                                                 key={i}
-                                                                className="bg-[#2a2a2a] px-3 py-1 rounded-full text-sm cursor-pointer hover:bg-yellow-500"
-                                                                onClick={() => {
-                                                                    localStorage.setItem("scrollToTrainer", trainer);
-                                                                    window.location.href = "/trainers";
-                                                                }}
+                                                                className="bg-[#2a2a2a] px-3 py-1 rounded-full text-sm cursor-pointer hover:bg-yellow-500 hover:text-black transition-colors"
                                                             >
                                                                 {trainer}
                                                             </span>
@@ -164,6 +133,17 @@ export default function Classes() {
                                                     )}
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Info Button at Bottom */}
+                                    <div className="flex w-full">
+                                        <div className="flex-1"></div>
+                                        <div
+                                            className="bg-[#333] w-32 py-6 flex items-center justify-center text-white font-medium hover:bg-[#444] transition-colors cursor-pointer"
+                                            onClick={() => toggleExpand(catIndex, classIndex)}
+                                        >
+                                            {isExpanded ? 'Hide' : 'Info'}
                                         </div>
                                     </div>
                                 </div>

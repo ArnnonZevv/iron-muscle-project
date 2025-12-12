@@ -9,35 +9,70 @@ export default function Navbar() {
         navigate("/");
     };
 
+    const navItems = [
+        { label: "Dashboard", path: "/dashboard" },
+        { label: "Classes", path: "/classes" },
+        { label: "Trainers", path: "/trainers" },
+        { label: "Membership", path: "/membership" },
+        { label: "Payments", path: "/payments" },
+        { label: "Cancel / Refund", path: "/cancellation" },
+        { label: "Admin Panel", path: "/admin" },
+        { label: "Settings", path: "/settings" },
+    ];
+
     return (
-        <header className="fixed top-0 w-full bg-gray-900 text-white flex items-center justify-between px-6 py-4 shadow-md z-50">
-            <div className="flex items-center gap-3">
-                <img 
-                    src={logo} 
-                    alt="Iron Muscle Logo" 
-                    className="w-10 h-10 rounded-full object-cover"
-                />
-            </div>
+        <header className="fixed top-0 w-full bg-[#1b1b1b] shadow-md z-50 h-24">
+            <div className="relative h-full flex items-center justify-between px-6">
 
-            <h1 className="text-xl font-semibold tracking-wide">Iron Muscle</h1>
+                {/* Logo */}
+                <div className="absolute left-6 top-1/2 transform -translate-y-1/2">
+                    <div className="bg-[#1b1b1b] rounded-full p-1 shadow-lg w-28 h-28 flex items-center justify-center">
+                        <img 
+                            src={logo} 
+                            alt="Iron Muscle Logo" 
+                            className="w-24 h-24 object-cover rounded-full"
+                        />
+                    </div>
+                </div>
 
-            <nav className="flex items-center gap-6">
-                <a href="/dashboard" className="hover:text-yellow-400">Dashboard</a>
-                <a href="/classes" className="hover:text-yellow-400">Classes</a>
-                <a href="/trainers" className="hover:text-yellow-400">Trainers</a>
-                <a href="/membership" className="hover:text-yellow-400">Membership</a>
-                <a href="/payments" className="hover:text-yellow-400">Payments</a>
-                <a href="/cancellation" className="hover:text-yellow-400">Cancel / Refund</a>
-                <a href="/admin" className="hover:text-yellow-400">Admin Panel</a>
-                <a href="/settings" className="hover:text-yellow-400">Settings</a>
-
-                <button 
-                    onClick={handleLogout} 
-                    className="bg-red-500 px-4 py-1 rounded hover:bg-red-600"
+                {/* Title */}
+                <h1
+                className="font-semibold tracking-wide text-white ml-36 overflow-hidden whitespace-nowrap"
+                style={{
+                    fontSize: '9rem',
+                    lineHeight: '6rem', //keeps title inside
+                    transform: 'skewX(-0deg)',
+                    maxHeight: '100%',
+                }}
                 >
-                    Logout
-                </button>
-            </nav>
+                IRON MUSCLE
+                </h1>
+
+                {/* Nav links as connected parallelograms */}
+                <nav className="flex items-stretch gap-0 h-full ml-6">
+                    {navItems.map((item) => (
+                        <a 
+                            key={item.label} 
+                            href={item.path} 
+                            className="relative flex-shrink-0 flex items-center justify-center h-full px-6 bg-[#2a2a2a] text-yellow-400 font-medium transform skew-x-[-0deg] hover:bg-yellow-500 hover:text-black transition-all duration-200 rounded-l-none rounded-r-none"
+                        >
+                            <span className="inline-block transform skew-x-[0deg]">
+                                {item.label}
+                            </span>
+                        </a>
+                    ))}
+
+                    {/* Logout button */}
+                    <button 
+                        onClick={handleLogout} 
+                        className="relative flex-shrink-0 flex items-center justify-center h-full px-6 bg-red-500 text-white font-medium transform skew-x-[-0deg] hover:bg-red-600 transition-all duration-200 rounded-l-none rounded-r-none"
+                    >
+                        <span className="inline-block transform skew-x-[0deg]">
+                            Logout
+                        </span>
+                    </button>
+                </nav>
+            </div>
         </header>
     );
 }
